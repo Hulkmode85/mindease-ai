@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindEase AI - AI-Powered Mental Wellness Companion</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Segoe UI',system-ui,sans-serif;background:#0a0f0a;color:#e0e0e0;overflow-x:hidden}
+        .notice{background:#1a1a00;padding:10px;text-align:center;font-size:0.8em;color:#fbbf24;border-bottom:1px solid #3a3a00}
+        .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 20px;background:radial-gradient(ellipse at top,#0a1a0a 0%,#0a0f0a 70%)}
+        .hero h1{font-size:3.5em;background:linear-gradient(135deg,#4ade80,#22c55e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:16px}
+        .hero p{font-size:1.3em;color:#9ca3af;max-width:600px;line-height:1.6}
+        .cta{display:inline-block;margin-top:32px;padding:16px 48px;background:linear-gradient(135deg,#22c55e,#16a34a);border-radius:12px;color:white;text-decoration:none;font-weight:700;font-size:1.1em;transition:transform .2s}
+        .cta:hover{transform:scale(1.05)}
+        .tags{display:flex;gap:12px;justify-content:center;margin-top:20px;flex-wrap:wrap}
+        .tag{background:#111a11;border:1px solid #1e2e1e;border-radius:10px;padding:8px 18px;font-size:0.9em;color:#9ca3af}
+        .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;max-width:1000px;margin:0 auto;padding:80px 20px}
+        .feat{background:#111a11;border:1px solid #1e2e1e;border-radius:16px;padding:32px;text-align:center}
+        .feat .icon{font-size:2.5em;margin-bottom:12px}
+        .feat h3{color:#4ade80;margin-bottom:8px}
+        .feat p{color:#9ca3af;font-size:0.95em;line-height:1.5}
+        .how{text-align:center;padding:80px 20px}
+        .how h2{font-size:2.2em;margin-bottom:40px}
+        .steps{display:flex;gap:32px;justify-content:center;flex-wrap:wrap;max-width:900px;margin:0 auto}
+        .step{width:200px;text-align:center}
+        .step .num{width:48px;height:48px;background:linear-gradient(135deg,#22c55e,#16a34a);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:1.2em;margin-bottom:12px}
+        .step h4{color:#e0e0e0;margin-bottom:6px}
+        .step p{color:#9ca3af;font-size:0.85em}
+        .pricing{text-align:center;padding:80px 20px;background:#080e08}
+        .pricing h2{font-size:2.2em;margin-bottom:40px}
+        .price-grid{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;max-width:900px;margin:0 auto}
+        .price-card{background:#111a11;border:1px solid #1e2e1e;border-radius:16px;padding:32px;width:260px;text-align:center}
+        .price-card.pop{border-color:#22c55e;position:relative}
+        .price-card.pop::before{content:'MOST POPULAR';position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:#22c55e;color:white;padding:4px 16px;border-radius:20px;font-size:0.75em;font-weight:700}
+        .price-card h3{color:#e0e0e0;margin-bottom:8px}
+        .price-card .price{font-size:2em;font-weight:700;color:#4ade80;margin-bottom:12px}
+        .price-card ul{list-style:none;text-align:left;color:#9ca3af;font-size:0.9em;line-height:2}
+        .price-card ul li::before{content:'+ ';color:#4ade80;font-weight:700}
+        .safety{text-align:center;padding:60px 20px;max-width:700px;margin:0 auto}
+        .safety h2{font-size:1.8em;margin-bottom:16px;color:#fbbf24}
+        .safety p{color:#9ca3af;line-height:1.8;font-size:0.95em}
+        .safety .crisis-box{background:#1a1a00;border:1px solid #fbbf24;border-radius:12px;padding:20px;margin-top:20px;text-align:left;color:#fcd34d;line-height:1.8}
+        footer{text-align:center;padding:40px 20px;color:#4b5563;font-size:0.85em;border-top:1px solid #1e2e1e}
+    </style>
+</head>
+<body>
+    <div class="notice">MindEase AI is for wellness support only. Not a replacement for professional therapy. In crisis? Call 988.</div>
+    <div class="hero">
+        <h1>MindEase AI</h1>
+        <p>Your AI-powered mental wellness companion. CBT techniques, mood tracking, breathing exercises, and journaling -- all in one supportive space.</p>
+        <div class="tags">
+            <div class="tag">CBT Techniques</div>
+            <div class="tag">Mood Tracking</div>
+            <div class="tag">Breathing Exercises</div>
+            <div class="tag">Journaling</div>
+        </div>
+        <a href="#pricing" class="cta">Start Your Wellness Journey</a>
+    </div>
+
+    <div class="features">
+        <div class="feat"><div class="icon">&#x1f9e0;</div><h3>CBT Thought Reframing</h3><p>Identify cognitive distortions and reframe negative thought patterns using evidence-based CBT techniques.</p></div>
+        <div class="feat"><div class="icon">&#x1f4ca;</div><h3>Mood Tracking</h3><p>Log your mood daily and see patterns over time. Understand your emotional triggers and growth.</p></div>
+        <div class="feat"><div class="icon">&#x1f32c;</div><h3>Breathing Exercises</h3><p>Guided box breathing, 4-7-8, and diaphragmatic techniques to calm your nervous system in real time.</p></div>
+        <div class="feat"><div class="icon">&#x1f4d3;</div><h3>Journaling Prompts</h3><p>Personalized reflection prompts based on your mood to help you process emotions and build self-awareness.</p></div>
+        <div class="feat"><div class="icon">&#x1f31f;</div><h3>Coping Strategies</h3><p>Learn and practice evidence-based coping skills for stress, anxiety, low mood, and overwhelm.</p></div>
+        <div class="feat"><div class="icon">&#x1f512;</div><h3>Private & Safe</h3><p>Your conversations stay between you and MindEase. A judgment-free space to express yourself honestly.</p></div>
+    </div>
+
+    <div class="how">
+        <h2>How It Works</h2>
+        <div class="steps">
+            <div class="step"><div class="num">1</div><h4>Check In</h4><p>Log your mood and share how you're feeling</p></div>
+            <div class="step"><div class="num">2</div><h4>Get Support</h4><p>AI companion offers techniques and exercises</p></div>
+            <div class="step"><div class="num">3</div><h4>Practice</h4><p>Breathing, journaling, CBT exercises</p></div>
+            <div class="step"><div class="num">4</div><h4>Grow</h4><p>Track progress and build lasting habits</p></div>
+        </div>
+    </div>
+
+    <div class="pricing" id="pricing">
+        <h2>Simple Pricing</h2>
+        <div class="price-grid">
+            <div class="price-card">
+                <h3>Basic</h3>
+                <div class="price">$14<span style="font-size:0.4em;color:#9ca3af">/mo</span></div>
+                <ul>
+                    <li>Daily mood tracking</li>
+                    <li>Guided breathing exercises</li>
+                    <li>CBT thought reframing</li>
+                    <li>Journaling prompts</li>
+                    <li>Crisis resources</li>
+                </ul>
+            </div>
+            <div class="price-card pop">
+                <h3>Premium</h3>
+                <div class="price">$29<span style="font-size:0.4em;color:#9ca3af">/mo</span></div>
+                <ul>
+                    <li>Everything in Basic</li>
+                    <li>Daily check-ins</li>
+                    <li>Personalized coping plans</li>
+                    <li>Guided meditation scripts</li>
+                    <li>Sleep hygiene coaching</li>
+                    <li>Progress tracking</li>
+                </ul>
+            </div>
+            <div class="price-card">
+                <h3>Coached</h3>
+                <div class="price">$49<span style="font-size:0.4em;color:#9ca3af">/mo</span></div>
+                <ul>
+                    <li>Everything in Premium</li>
+                    <li>Weekly wellness summaries</li>
+                    <li>Goal setting & accountability</li>
+                    <li>Advanced CBT worksheets</li>
+                    <li>Habit formation coaching</li>
+                    <li>Stress management plans</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="safety">
+        <h2>Your Safety Matters</h2>
+        <p>MindEase AI is a wellness support tool designed to complement -- not replace -- professional mental health care. We encourage everyone to work with a licensed therapist for clinical concerns.</p>
+        <div class="crisis-box">
+            <strong>If you or someone you know is in crisis:</strong><br>
+            988 Suicide & Crisis Lifeline: Call or text <strong>988</strong><br>
+            Crisis Text Line: Text <strong>HOME</strong> to <strong>741741</strong><br>
+            Emergency Services: Call <strong>911</strong><br>
+            International Association for Suicide Prevention: <strong>https://www.iasp.info/resources/Crisis_Centres/</strong>
+        </div>
+    </div>
+
+    <footer>&copy; 2026 MindEase AI. All rights reserved. For wellness support only -- not a substitute for professional therapy.</footer>
+</body>
+</html>
