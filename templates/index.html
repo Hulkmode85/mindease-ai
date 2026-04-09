@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindEase AI - Your Supportive Wellness Companion</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Segoe UI',system-ui,sans-serif;background:#0a0f0a;color:#e0e0e0;min-height:100vh}
+        .header{background:linear-gradient(135deg,#0a1a0a,#102010);padding:24px 20px;text-align:center;border-bottom:1px solid #1a3a1a;position:sticky;top:0;z-index:10}
+        .header h1{font-size:1.8em;background:linear-gradient(135deg,#4ade80,#22c55e);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .header p{color:#9ca3af;margin-top:4px;font-size:0.9em}
+        .disclaimer-bar{background:#1a1a00;border-bottom:1px solid #3a3a00;padding:8px 20px;text-align:center;font-size:0.75em;color:#fbbf24}
+        .container{max-width:800px;margin:0 auto;padding:20px;display:flex;flex-direction:column;height:calc(100vh - 140px)}
+        .tools-bar{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+        .tool-btn{padding:8px 16px;background:#111a11;border:1px solid #1e2e1e;border-radius:20px;color:#9ca3af;cursor:pointer;font-size:0.85em;transition:all .2s;border:1px solid #2a3a2a}
+        .tool-btn:hover,.tool-btn.active{background:#1a2a1a;color:#4ade80;border-color:#4ade80}
+        .tier-selector{display:flex;gap:8px;margin-bottom:16px}
+        .tier-btn{flex:1;padding:10px;background:#111a11;border:2px solid #2a3a2a;border-radius:10px;cursor:pointer;text-align:center;transition:all .2s;color:#9ca3af;font-size:0.85em}
+        .tier-btn:hover{border-color:#4ade80}
+        .tier-btn.active{border-color:#4ade80;background:#0a1a0a;color:#4ade80}
+        .tier-btn .price{font-weight:700;font-size:1.1em;display:block;margin-top:2px}
+        .chat-area{flex:1;overflow-y:auto;padding:16px;background:#080e08;border-radius:16px;border:1px solid #1e2e1e;margin-bottom:16px;scroll-behavior:smooth}
+        .message{margin-bottom:16px;max-width:85%;animation:fadeIn .3s}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+        .message.user{margin-left:auto;background:#1a2a1a;border-radius:16px 16px 4px 16px;padding:12px 16px;color:#e0e0e0}
+        .message.assistant{background:#111a11;border-radius:16px 16px 16px 4px;padding:12px 16px;color:#d0d0d0;border:1px solid #1e2e1e;line-height:1.6}
+        .message.assistant strong{color:#4ade80}
+        .message.system{text-align:center;color:#9ca3af;font-size:0.85em;max-width:100%;background:none}
+        .crisis-alert{background:#2a0a0a;border:1px solid #ef4444;border-radius:12px;padding:16px;margin:12px 0;color:#fca5a5;line-height:1.6}
+        .crisis-alert strong{color:#ef4444}
+        .input-area{display:flex;gap:8px}
+        .input-area input{flex:1;padding:14px 18px;background:#111a11;border:1px solid #2a3a2a;border-radius:12px;color:#e0e0e0;font-size:1em;transition:border-color .2s}
+        .input-area input:focus{outline:none;border-color:#4ade80}
+        .input-area button{padding:14px 24px;background:linear-gradient(135deg,#22c55e,#16a34a);border:none;border-radius:12px;color:white;font-weight:700;cursor:pointer;transition:opacity .2s}
+        .input-area button:hover{opacity:0.9}
+        .input-area button:disabled{opacity:0.4;cursor:not-allowed}
+        .mood-panel,.breathing-panel,.journal-panel{display:none;background:#111a11;border:1px solid #1e2e1e;border-radius:16px;padding:20px;margin-bottom:16px}
+        .mood-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+        .mood-btn{padding:12px;background:#0a140a;border:1px solid #2a3a2a;border-radius:10px;cursor:pointer;text-align:center;transition:all .2s;color:#9ca3af}
+        .mood-btn:hover{border-color:#4ade80;color:#4ade80}
+        .mood-btn.crisis{border-color:#ef4444;color:#ef4444}
+        .mood-btn.crisis:hover{background:#1a0a0a}
+        .breathing-visual{width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,#22c55e44,#22c55e11);margin:20px auto;display:flex;align-items:center;justify-content:center;font-size:1.2em;color:#4ade80;transition:transform 4s ease-in-out}
+        .breathing-visual.expand{transform:scale(1.5)}
+        .breathing-visual.hold{transform:scale(1.5)}
+        .breathing-visual.contract{transform:scale(1)}
+        .spinner{display:inline-block;width:18px;height:18px;border:2px solid #ffffff40;border-top-color:white;border-radius:50%;animation:spin .8s linear infinite;vertical-align:middle;margin-right:6px}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        hr{border:none;border-top:1px solid #1e2e1e;margin:12px 0}
+    </style>
+</head>
+<body>
+    <div class="disclaimer-bar">For wellness support only. Not a replacement for professional therapy. Crisis? Call 988 or text HOME to 741741.</div>
+    <div class="header">
+        <h1>MindEase AI</h1>
+        <p>Your supportive wellness companion</p>
+    </div>
+    <div class="container">
+        <div class="tier-selector">
+            <div class="tier-btn active" data-tier="basic">Basic<span class="price">$14/mo</span></div>
+            <div class="tier-btn" data-tier="premium">Premium<span class="price">$29/mo</span></div>
+            <div class="tier-btn" data-tier="coached">Coached<span class="price">$49/mo</span></div>
+        </div>
+        <div class="tools-bar">
+            <div class="tool-btn" onclick="togglePanel('mood')">Mood Check-In</div>
+            <div class="tool-btn" onclick="togglePanel('breathing')">Breathing Exercise</div>
+            <div class="tool-btn" onclick="togglePanel('journal')">Journal Prompt</div>
+        </div>
+        <div class="mood-panel" id="moodPanel">
+            <h3 style="color:#4ade80;margin-bottom:4px">How are you feeling?</h3>
+            <p style="color:#6b7280;font-size:0.85em">Select your current mood</p>
+            <div class="mood-grid">
+                <div class="mood-btn" onclick="logMood('Great')">Great</div>
+                <div class="mood-btn" onclick="logMood('Good')">Good</div>
+                <div class="mood-btn" onclick="logMood('Okay')">Okay</div>
+                <div class="mood-btn" onclick="logMood('Low')">Low</div>
+                <div class="mood-btn" onclick="logMood('Struggling')">Struggling</div>
+                <div class="mood-btn crisis" onclick="logMood('In Crisis')">In Crisis</div>
+            </div>
+        </div>
+        <div class="breathing-panel" id="breathingPanel">
+            <h3 style="color:#4ade80;margin-bottom:8px">Breathing Exercises</h3>
+            <div style="display:flex;gap:8px;margin-bottom:12px">
+                <button class="tool-btn active" onclick="startBreathing('box')">Box Breathing</button>
+                <button class="tool-btn" onclick="startBreathing('478')">4-7-8</button>
+                <button class="tool-btn" onclick="startBreathing('diaphragmatic')">Diaphragmatic</button>
+            </div>
+            <div class="breathing-visual" id="breathCircle">Ready</div>
+            <p id="breathInstruction" style="text-align:center;color:#9ca3af;font-size:0.9em"></p>
+        </div>
+        <div class="journal-panel" id="journalPanel">
+            <h3 style="color:#4ade80;margin-bottom:8px">Journal Prompt</h3>
+            <p style="color:#6b7280;font-size:0.85em;margin-bottom:12px">Get a personalized journaling prompt based on your mood</p>
+            <button class="tool-btn" onclick="getJournalPrompt()" id="journalBtn">Generate Prompt</button>
+            <div id="journalResult" style="margin-top:12px;color:#d0d0d0;line-height:1.6;display:none"></div>
+        </div>
+        <div class="chat-area" id="chatArea">
+            <div class="message system">Welcome to MindEase. I'm here to support your mental wellness journey. How are you feeling today?</div>
+        </div>
+        <div class="input-area">
+            <input type="text" id="msgInput" placeholder="Share what's on your mind..." onkeydown="if(event.key==='Enter')sendMessage()">
+            <button onclick="sendMessage()" id="sendBtn">Send</button>
+        </div>
+    </div>
+    <script>
+        let conversation = [];
+        let currentTier = 'basic';
+        let moodLog = [];
+        let breathingInterval = null;
+
+        document.querySelectorAll('.tier-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tier-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentTier = btn.dataset.tier;
+            });
+        });
+
+        function togglePanel(panel) {
+            const panels = ['mood', 'breathing', 'journal'];
+            panels.forEach(p => {
+                const el = document.getElementById(p + 'Panel');
+                if (p === panel) el.style.display = el.style.display === 'block' ? 'none' : 'block';
+                else el.style.display = 'none';
+            });
+            if (panel !== 'breathing' && breathingInterval) {
+                clearInterval(breathingInterval);
+                breathingInterval = null;
+            }
+        }
+
+        async function logMood(mood) {
+            const res = await fetch('/mood-check', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({mood, note: ''})
+            });
+            const data = await res.json();
+            moodLog.push(data.entry);
+
+            if (data.alert) {
+                addMessage('system', '');
+                const chatArea = document.getElementById('chatArea');
+                const alertDiv = document.createElement('div');
+                alertDiv.className = 'crisis-alert';
+                alertDiv.innerHTML = '<strong>We hear you and we care.</strong><br><br>' +
+                    '988 Suicide & Crisis Lifeline: Call or text <strong>988</strong><br>' +
+                    'Crisis Text Line: Text <strong>HOME</strong> to <strong>741741</strong><br>' +
+                    'Emergency: Call <strong>911</strong><br><br>You are not alone.';
+                chatArea.appendChild(alertDiv);
+                chatArea.scrollTop = chatArea.scrollHeight;
+            } else {
+                addMessage('system', 'Mood logged: ' + mood + '. Thank you for checking in.');
+                document.getElementById('msgInput').value = "I'm feeling " + mood.toLowerCase() + " right now.";
+            }
+            document.getElementById('moodPanel').style.display = 'none';
+        }
+
+        function startBreathing(type) {
+            if (breathingInterval) clearInterval(breathingInterval);
+            const circle = document.getElementById('breathCircle');
+            const instr = document.getElementById('breathInstruction');
+            const patterns = {
+                box: [{text:'Inhale',dur:4000,cls:'expand'},{text:'Hold',dur:4000,cls:'hold'},{text:'Exhale',dur:4000,cls:'contract'},{text:'Hold',dur:4000,cls:'contract'}],
+                '478': [{text:'Inhale',dur:4000,cls:'expand'},{text:'Hold',dur:7000,cls:'hold'},{text:'Exhale',dur:8000,cls:'contract'}],
+                diaphragmatic: [{text:'Inhale (belly)',dur:4000,cls:'expand'},{text:'Exhale (slow)',dur:6000,cls:'contract'}]
+            };
+            const steps = patterns[type] || patterns.box;
+            let step = 0;
+            let cycle = 0;
+            const maxCycles = 4;
+
+            function doStep() {
+                if (cycle >= maxCycles) {
+                    circle.textContent = 'Done';
+                    circle.className = 'breathing-visual';
+                    instr.textContent = 'Great job! Take a moment to notice how you feel.';
+                    clearInterval(breathingInterval);
+                    breathingInterval = null;
+                    return;
+                }
+                const s = steps[step];
+                circle.textContent = s.text;
+                circle.className = 'breathing-visual ' + s.cls;
+                instr.textContent = 'Cycle ' + (cycle + 1) + ' of ' + maxCycles;
+                step++;
+                if (step >= steps.length) { step = 0; cycle++; }
+                breathingInterval = setTimeout(doStep, s.dur);
+            }
+            doStep();
+        }
+
+        async function getJournalPrompt() {
+            const btn = document.getElementById('journalBtn');
+            const result = document.getElementById('journalResult');
+            btn.disabled = true;
+            btn.textContent = 'Generating...';
+
+            const lastMood = moodLog.length > 0 ? moodLog[moodLog.length-1].mood : 'Okay';
+            try {
+                const res = await fetch('/journal-prompt', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({mood: lastMood, tier: currentTier})
+                });
+                const data = await res.json();
+                if (data.success) {
+                    result.style.display = 'block';
+                    result.textContent = data.prompt;
+                }
+            } catch(e) {
+                result.style.display = 'block';
+                result.textContent = 'Could not generate prompt. Try again.';
+            }
+            btn.disabled = false;
+            btn.textContent = 'Generate Prompt';
+        }
+
+        function addMessage(role, text) {
+            const chatArea = document.getElementById('chatArea');
+            const div = document.createElement('div');
+            div.className = 'message ' + role;
+            if (role === 'assistant') {
+                div.innerHTML = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+            } else {
+                div.textContent = text;
+            }
+            chatArea.appendChild(div);
+            chatArea.scrollTop = chatArea.scrollHeight;
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('msgInput');
+            const msg = input.value.trim();
+            if (!msg) return;
+
+            input.value = '';
+            addMessage('user', msg);
+            conversation.push({role: 'user', content: msg});
+
+            const sendBtn = document.getElementById('sendBtn');
+            sendBtn.disabled = true;
+            sendBtn.innerHTML = '<span class="spinner"></span>';
+
+            try {
+                const res = await fetch('/chat', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({message: msg, tier: currentTier, conversation: conversation})
+                });
+                const data = await res.json();
+                if (data.success) {
+                    addMessage('assistant', data.response);
+                    conversation.push({role: 'assistant', content: data.response});
+                } else {
+                    addMessage('system', 'Something went wrong. Please try again.');
+                }
+            } catch(e) {
+                addMessage('system', 'Connection error. Please try again.');
+            }
+            sendBtn.disabled = false;
+            sendBtn.textContent = 'Send';
+        }
+    </script>
+</body>
+</html>
